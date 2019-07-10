@@ -5,6 +5,7 @@ import axios from "../../axios-weather";
 import Spinner from "../../UI/Spinner/Spinner";
 import CurrentWeather from "../../components/Weather/Weather";
 import cities from "../../services/cities.json";
+
 function Weather() {
   const [search, setSearch] = useState("");
   const [currentWeather, setCurrentWeather] = useState();
