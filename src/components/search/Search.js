@@ -1,11 +1,25 @@
 import React from "react";
-import "./Search.css"
+import "./Search.css";
 
-const search = (props) => {
-    return (<div className="Search">
-        <input placeholder="El tiempo en..." onKeyDown={props.onChange} />
-        <button type="button">Buscar</button>
-    </div>)
-}
+const search = props => {
+  const inputHandler = e => {
+    if (e.which === 13 || e.keyCode === 13) {
+      props.onClick();
+    }
+    return true;
+  };
+  return (
+    <div className="Search">
+      <input
+        placeholder="El tiempo en..."
+        onChange={props.onChange}
+        onKeyDown={inputHandler}
+      />
+      <button type="button" onClick={props.onClick}>
+        Buscar
+      </button>
+    </div>
+  );
+};
 
 export default search;
