@@ -1,4 +1,4 @@
-.Search input {
+.Search select {
     outline: none;
     border: 1px solid #CCC;
     border-radius: 5px 0 0 5px;
@@ -6,9 +6,10 @@
     width: 80%;
     padding: 0px 8px;
     box-sizing: border-box;
+    color: #828282;
 }
 
-.Search input:hover {
+.Search select:hover {
     outline: none;
 }
 

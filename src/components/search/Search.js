@@ -2,19 +2,16 @@ import React from "react";
 import "./Search.css";
 
 const search = props => {
-  const inputHandler = e => {
-    if (e.which === 13 || e.keyCode === 13) {
-      props.onClick();
-    }
-    return true;
-  };
+  const options = props.cities.map((x, index) => (
+    <option value={x} key={index}>
+      {x}
+    </option>
+  ));
   return (
     <div className="Search">
-      <input
-        placeholder="El tiempo en..."
-        onChange={props.onChange}
-        onKeyDown={inputHandler}
-      />
+      <select placeholder="El tiempo en..." onChange={props.onChange}>
+        {options}
+      </select>
       <button type="button" onClick={props.onClick}>
         Buscar
       </button>
