@@ -1,0 +1,41 @@
+.CurrentWeather {
+  overflow: auto;
+  .Information {
+    float: left;
+    text-align: start;
+    width: 100%;
+    .LeftContainer {
+      float: left;
+      width: 50%;
+    }
+    .RightContainer {
+      float: right;
+      width: 50%;
+    }
+
+    h4,
+    h5 {
+      margin: 0;
+      padding: 0;
+      font-weight: 500;
+      display: block;
+      color: #828282;
+    }
+  }
+  .Temperature {
+    float: left;
+    img {
+      float: inherit;
+    }
+    h1 {
+      margin: 0;
+      padding: 0;
+      float: inherit;
+      font-size: 2.6em;
+      font-weight: 600;
+    }
+    span {
+      cursor: pointer;
+    }
+  }
+}

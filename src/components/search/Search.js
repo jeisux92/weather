@@ -1,5 +1,5 @@
 import React from "react";
-import "./Search.css";
+import classes from "./Search.module.scss";
 
 const search = props => {
   const options = props.cities.map((x, index) => (
@@ -8,7 +8,7 @@ const search = props => {
     </option>
   ));
   return (
-    <div className="Search">
+    <div className={classes.Search}>
       <select placeholder="El tiempo en..." onChange={props.onChange}>
         {options}
       </select>

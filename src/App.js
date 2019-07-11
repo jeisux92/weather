@@ -1,11 +1,11 @@
-import React from 'react';
-import './App.css';
-import Weather from './containers/Weather/Weather';
+import React from "react";
+import classes from "./App.module.scss";
+import Weather from "./containers/Weather/Weather";
 
 function App() {
   return (
-    <div className="App">
-      <div className="Weather-Container">
+    <div className={classes.App}>
+      <div className={classes.WeatherContainer}>
         <Weather />
       </div>
     </div>

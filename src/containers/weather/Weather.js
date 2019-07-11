@@ -1,56 +1,97 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Search from "../../components/Search/Search";
-import "./Weather.css";
-import axios from "../../axios-weather";
+import classes from "./Weather.module.scss";
 import Spinner from "../../UI/Spinner/Spinner";
-import CurrentWeather from "../../components/Weather/Weather";
+import CurrentWeather from "../../components/CurrentWeather/CurrentWeather";
 import cities from "../../services/cities.json";
+import weatherService from "../../services/weatherService";
+import days from "../../services/days.json";
+import SmallWeather from "../../components/SmallWeather/SmallWeather";
 
 function Weather() {
   const [search, setSearch] = useState("");
+  const [error, setError] = useState(false);
   const [currentWeather, setCurrentWeather] = useState();
-  const [isLoading, setIsLoading] = useState(false);
+  const [history, setHistory] = useState();
+  const [isLoading, setisLoading] = useState(false);
   const searchHandler = e => setSearch(e.target.value);
 
+  useEffect(() => setSearch(cities[0]), []);
   const clickSearchHandler = e => {
-    setIsLoading(true);
+    setisLoading(true);
+    setError(false);
     setCurrentWeather(null);
-    axios
-      .get(
-        `current.json?key=8c3c7daa94234a59bd7140955182012&q=${search}&lang=es`
-      )
+
+    weatherService
+      .getWeather(search, 7)
       .then(response => {
-        setCurrentWeather(response.data);
-        setIsLoading(false);
+        setCurrentWeather(response.current);
+        setisLoading(false);
+        setHistory(response.history);
       })
-      .catch(x => setIsLoading(false));
+      .catch(e => {
+        setError(true);
+      });
   };
 
   let weather = (
-    <h4>Por favor escriba el nombre del lugar que desee consultar</h4>
+    <div className={classes.NotLoaded}>
+      <h4>Por favor escriba el nombre del lugar que desee consultar</h4>
+    </div>
   );
+
   if (isLoading) {
-    weather = <Spinner />;
+    weather = (
+      <div className={classes.NotLoaded}>
+        {error ? (
+          <h4>Se ha presentado un error en la búsqueda</h4>
+        ) : (
+          <Spinner />
+        )}
+      </div>
+    );
   }
   if (currentWeather) {
+    const date = new Date(currentWeather.location.localtime);
     weather = (
-      <CurrentWeather
-        current={currentWeather.current}
-        location={currentWeather.location}
-      />
+      <div className={classes.CurrentWeatherContainer}>
+        <CurrentWeather
+          current={currentWeather.current}
+          location={currentWeather.location}
+          dayName={days[date.getDay()]}
+        />
+      </div>
+    );
+  }
+
+  let historic = null;
+
+  if (!isLoading && history) {
+    historic = (
+      <div className={classes.HistoryContainer}>
+        {history.forecast.forecastday.map(day => {
+          const date = new Date(`${day.date} 12:00:00`);
+          return (
+            <div key={day.date_epoch} className={classes.History}>
+              <SmallWeather day={days[date.getDay()]} weather={day.day} />
+            </div>
+          );
+        })}
+      </div>
     );
   }
 
   return (
-    <div className="Weather">
-      <div className="Search-Container">
+    <div className={classes.Weather}>
+      <div className={classes.SearchContainer}>
         <Search
           onChange={searchHandler}
           onClick={clickSearchHandler}
           cities={cities}
         />
       </div>
-      <div className="Current-Weather-Container">{weather}</div>
+      {weather}
+      {historic}
     </div>
   );
 }
