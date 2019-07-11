@@ -33,34 +33,27 @@ function Weather() {
         setError(true);
       });
   };
-
+  let currentClass = classes.NotLoaded;
   let weather = (
-    <div className={classes.NotLoaded}>
-      <h4>Por favor escriba el nombre del lugar que desee consultar</h4>
-    </div>
+    <h4>Por favor escriba el nombre del lugar que desee consultar</h4>
   );
 
   if (isLoading) {
-    weather = (
-      <div className={classes.NotLoaded}>
-        {error ? (
-          <h4>Se ha presentado un error en la búsqueda</h4>
-        ) : (
-          <Spinner />
-        )}
-      </div>
+    weather = error ? (
+      <h4>Se ha presentado un error en la búsqueda</h4>
+    ) : (
+      <Spinner />
     );
   }
   if (currentWeather) {
+    currentClass = classes.CurrentWeatherContainer;
     const date = new Date(currentWeather.location.localtime);
     weather = (
-      <div className={classes.CurrentWeatherContainer}>
-        <CurrentWeather
-          current={currentWeather.current}
-          location={currentWeather.location}
-          dayName={days[date.getDay()]}
-        />
-      </div>
+      <CurrentWeather
+        current={currentWeather.current}
+        location={currentWeather.location}
+        dayName={days[date.getDay()]}
+      />
     );
   }
 
@@ -90,7 +83,7 @@ function Weather() {
           cities={cities}
         />
       </div>
-      {weather}
+      <div className={currentClass}>{weather}</div>
       {historic}
     </div>
   );
