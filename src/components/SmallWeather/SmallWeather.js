@@ -4,7 +4,7 @@ import classes from "./SmallWeather.module.scss";
 const SmallWeather = props => (
   <div className={classes.SmallWeather}>
     <h6>{props.day.substring(0, 3)}.</h6>
-    <img src={props.weather.condition.icon} />
+    <img src={props.weather.condition.icon} alt="History image" />
     <div className={classes.Temperature}>
       <h6>
         <strong>{props.weather.maxtemp_c} °C</strong>
