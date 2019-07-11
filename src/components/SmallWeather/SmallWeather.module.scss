@@ -1,7 +1,19 @@
 .SmallWeather {
-  h6 {
-    text-transform: lowercase;
+  > h6 {
     padding: 0;
     margin: 0;
+    text-transform: lowercase;
+    float: left;
+    color: #828282;
+  }
+  .Temperature {
+    h6:last-child {
+      color: #828282;
+    }
+    h6 {
+      padding: 0;
+      margin: 0;
+      float: left;
+    }
   }
 }
